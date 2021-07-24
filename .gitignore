@@ -1,0 +1,7 @@
+saved_models/
+temp/
+.vscode/
+without_name/classes/
+with_name/classes/
+without_name/dump
+with_name/dump
