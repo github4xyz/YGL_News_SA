@@ -1,0 +1,13 @@
+[Unit]
+Description=Naver News Stock Price Predictor
+After=network.target
+
+[Service]
+User=ubuntu4xyz
+WorkingDirectory=/home/ubuntu4xyz/project/flask/
+Environment=FLASK_CONFIG=production
+ExecStart=/home/ubuntu4xyz/project/flask/vflask/bin/python /home/ubuntu4xyz/project/flask/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
