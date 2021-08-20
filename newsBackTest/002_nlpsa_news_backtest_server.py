@@ -13,9 +13,12 @@ import logiReg
 saved_model_path = './NaverNews_bert_multi_with_final'
 reloaded_model = tf.saved_model.load(saved_model_path)
 
-code_names = pd.read_csv('./newsBackTest/code_stock_name.csv')
+code_name = pd.read_csv('./newsBackTest/code_stock_name.csv', sep='\t')
+# code_names.dropna(axis=0, inplace=True)
+code_names = code_name[~code_name.code.str.contains('K')]
+code_names.to_csv('./news/code_stock_name_tested.csv', index=False, sep='\t')
 
-for i in range(0, code_names.shape[0]-1):
+for i in range(0, code_names.shape[0]):
   x = code_names['code'][i]
   code = '{0:06d}'.format(int(x))
   name = code_names['name'][i]
@@ -26,7 +29,8 @@ for i in range(0, code_names.shape[0]-1):
   read_df['dlb'] = 0
   for ir in range(0, read_df.shape[0]-1):
     read = [read_df['news'][ir]]
-    read_df['mlp'][ir], read_df['mlb'][ir] = logiReg.logiRegPredict(read)
-    dl_results = tf.sigmoid(reloaded_model(tf.constant(read)))
-    read_df['dlp'][ir], read_df['dlb'][ir] = bert_result.calcReuslt(dl_results)
+    if len(read_df['news'][ir]) > 2:
+      read_df['mlp'][ir], read_df['mlb'][ir] = logiReg.logiRegPredict(read)
+      dl_results = tf.sigmoid(reloaded_model(tf.constant(read)))
+      read_df['dlp'][ir], read_df['dlb'][ir] = bert_result.calcReuslt(dl_results)
   read_df.to_csv('./newsBackTested/'+str(code)+'_'+name+'_news_tested.tsv', sep='\t')

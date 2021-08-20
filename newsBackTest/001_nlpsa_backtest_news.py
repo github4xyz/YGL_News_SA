@@ -46,7 +46,7 @@ for ticker in code_lists:
 
 code_names = dict(zip(code_lists, stock_name_lists))
 df_code_names = pd.DataFrame(list(code_names.items()), columns = ['code','name'])
-df_code_names.to_csv('./news/code_stock_name.csv')
+df_code_names.to_csv('./news/code_stock_name.csv', sep='\t')
 
 # with open('./news/code_stock_name.pkl', 'wb') as f:
 #     pickle.dump(code_names, f)

@@ -8,7 +8,7 @@ with open('./newsBackTest/code_stock_name.tsv', 'rb') as f:
     code_names = pickle.load(f)
 
 df_code_names = pd.DataFrame(list(code_names.items()), columns = ['code','name'])
-df_code_names.to_csv('./newsBackTest/code_stock_name.csv')
+df_code_names.to_csv('./newsBackTest/code_stock_name.csv', sep='\t')
 
 
 
